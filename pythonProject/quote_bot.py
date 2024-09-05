@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+#make command thatll apply the class, make the class first
 # Set the confirmation message when the bot is ready
 @bot.event
 async def on_ready():
@@ -28,11 +29,6 @@ async def list_command(ctx):
 async def functions(ctx):
     response = 'I am a simple Discord chatbot! I will reply to your command!'
     await ctx.send(response)
-
-#to get bot to respond
-@bot.event()
-
-
 
 # Retrieve token from the .env file
 load_dotenv()
