@@ -1,4 +1,6 @@
 # Import the required modules
+from tkinter import Label
+
 import discord
 import os
 from discord.ext import commands
@@ -9,10 +11,21 @@ intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 #make command thatll apply the class, make the class first
-# Set the confirmation message when the bot is ready
-@bot.event
-async def on_ready():
-    print(f'Logged in as {bot.user.name}')
+class FeedbackModal(discord.ui.Modal, title="Make your quote!")
+    quote_title = discord.ui.TextInput(
+        style = discord.TextStyle.short,
+        Label = "Title",
+        required = true,
+        person_whos_quoting="Who are you quoting?"
+    )
+
+    message = discord.ui.TextInput(
+        style = discord.ui.TextStyle.long,
+        Label = "Title",
+        required = true,
+        max_length = 1000,
+        quote = "Enter the quote"
+    )
 
 # Set the commands for your bot
 @bot.command()
