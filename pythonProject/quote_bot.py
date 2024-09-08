@@ -6,26 +6,42 @@ import os
 from discord.ext import commands
 from dotenv import load_dotenv
 
+import settings
+import utils
+
 # Create a Discord client instance and set the command prefix
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
+GUILD_ID = 1279194893037867021
 
 #make command thatll apply the class, make the class first
-class FeedbackModal(discord.ui.Modal, title="Make your quote!")
-    quote_title = discord.ui.TextInput(
-        style = discord.TextStyle.short,
-        Label = "Title",
-        required = true,
-        person_whos_quoting="Who are you quoting?"
+class QuoteModal(discord.ui.Modal, title="Put in your quote!"):
+    quotePerson = discord.ui.TextInput(
+        style=discord.TextStyle.short,
+        label="Person to quote",
+        required=True,
+        placeholder="Who are you quoting?"
     )
 
-    message = discord.ui.TextInput(
-        style = discord.ui.TextStyle.long,
-        Label = "Title",
-        required = true,
-        max_length = 1000,
-        quote = "Enter the quote"
+    quoteMessage = discord.ui.TextInput(
+        style=discord.TextStyle.long,
+        label="Person to quote",
+        required=True,
+        placeholder="Who are you quoting?",
+        max_length=500
     )
+
+@bot.event
+async def on_ready():
+    bot.tree.copy_global_to(guild=settings.GUILDS_ID)
+    await bot.tree.sync(guild=settings.GUILDS_ID)
+    await utils.load_videocmds(bot)
+
+@bot.tree.command()
+async def quote(interaction: discord.Interaction):
+    quote_modal = QuoteModal(),
+    await interaction.response.send_modal(quote_modal)
+
 
 # Set the commands for your bot
 @bot.command()
